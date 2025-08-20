@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrutura JSON - Shopee</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .shopee-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .shopee-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #ee4d2d, #ff6347);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .json-container {
+            background: #1e1e1e;
+            border-radius: 12px;
+            padding: 25px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            position: relative;
+        }
+
+        .json-container::before {
+            content: 'JSON';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            color: #6c757d;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .json-code {
+            color: #f8f9fa;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre;
+        }
+
+        .json-key {
+            color: #79c0ff;
+        }
+
+        .json-string {
+            color: #a5d6ff;
+        }
+
+        .json-comment {
+            color: #7c7c7c;
+            font-style: italic;
+        }
+
+        .json-bracket {
+            color: #ffa657;
+            font-weight: bold;
+        }
+
+        .field-description {
+            margin-top: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .field-description h3 {
+            color: #2c3e50;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .field-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #ee4d2d;
+        }
+
+        .field-name {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 180px;
+            font-family: 'JetBrains Mono', monospace;
+            background: #f1f3f4;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .field-desc {
+            color: #5f6368;
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 50px;
+            background: #ee4d2d;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: #d73527;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 640px) {
+            .card {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .field-item {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .field-name {
+                min-width: auto;
+                width: fit-content;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <div class="shopee-logo">
+                <div class="shopee-icon">S</div>
+                <h1>Estrutura JSON - Shopee</h1>
+            </div>
+            <p class="subtitle">Configuração para integração de pedidos</p>
+        </div>
+
+        <div class="json-container">
+            <button class="copy-btn" onclick="copyJSON()">Copiar</button>
+            <div class="json-code"><span class="json-bracket">{</span>
+  <span class="json-key">"external_order_numbers"</span>: <span class="json-bracket">{</span>
+    <span class="json-key">"marketplace"</span>: <span class="json-string">"{order_sn_shopee}"</span> <span class="json-comment">// Número do pedido de venda shopee</span>
+  <span class="json-bracket">}</span>,
+  <span class="json-key">"additional_information"</span>: <span class="json-bracket">{</span>
+    <span class="json-key">"shop_id"</span>: <span class="json-string">"{shop_id}"</span> <span class="json-comment">// Id da Loja na shopee</span>
+  <span class="json-bracket">}</span>,
+  <span class="json-key">"sales_channel"</span>: <span class="json-string">"shopee"</span>
+<span class="json-bracket">}</span></div>
+        </div>
+
+        <div class="field-description">
+            <h3>📋 Descrição dos Campos da Shopee </h3>
+            
+    
+            <div class="field-item">
+                <div class="field-name">order_sn_shopee</div>
+                <div class="field-desc">Número único do pedido na plataforma Shopee (order_sn_shopee)</div>
+            </div>
+            
+
+            <div class="field-item">
+                <div class="field-name">shop_id</div>
+                <div class="field-desc">Identificador único da loja na plataforma Shopee</div>
+            </div>
+            
+            <div class="field-item">
+                <div class="field-name">sales_channel</div>
+                <div class="field-desc">Canal de vendas fixo identificando a origem como "shopee"</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyJSON() {
+            const jsonText = `{
+  "external_order_numbers": {
+    "marketplace": "{order_sn_shopee}" // Número do pedido de venda shopee
+  },
+  "additional_information": {
+    "shop_id": "{shop_id}" // Id da Loja na shopee
+  },
+  "sales_channel": "shopee"
+}`;
+            
+            navigator.clipboard.writeText(jsonText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = 'Copiado!';
+                setTimeout(() => {
+                    btn.textContent = 'Copiar';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
